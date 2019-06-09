@@ -1,0 +1,36 @@
+Reference
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions
+
+- Primitive Pamarameters are by default passed by value i.e value changed inside the func is not reflected elsewhere.
+- User defined parameters, like arrays and objects, are passed as reference
+- method is a function that is inside an object
+- Types :- 
+  a) normal :- function xyz(abc) {...}
+  b) function expression :- // can be easily passed ar arguments
+      var fun = function(abc) {...} // anonymous
+      var fun = function xyz(abc) { return abc <= 1 ? 1 : abc*xyz(abc/2) } // useful for recursion
+ - Only the functions decalred with normal syntax are hoisted.
+    eg fun(55) // ReferenceError
+        var fun = function(p) { return p+5; }
+- A function has access to all variables defined in itself and in parent function and also all variables that the parent function has access to.
+- eg var foo = function bar() {} // Within the function all these are equal in reference :- bar(), foo(), arguments.callee()
+- Nested or inner function is also called a closure :- the inner function can use the arguments and variables of the outer function, while the outer function cannot use the arguments and variables of the inner function.
+- Scope Chaining
+  Functions can be multiply-nested, i.e. a function (A) containing a function (B) containing a function (C).
+  Both functions B and C form closures here, so B can access A and C can access B. In addition, since C can access B which can access A, C can also access A. 
+  Thus, the closures can contain multiple scopes; they recursively contain the scope of the functions containing it.
+- Name Conflicts :- the inner-most scope takes the highest precedence, while the outer-most scope takes the lowest.
+- A closure can be a function, be it named or anonymous, and also an object containing many methods. Each of these methods has the scope of a closure.
+- To access a closure or nested/inner function, you can return its reference frrom the enclosing function and then use that reference to access the closure.
+- since the inner function has access to the scope of the outer function, the variables and functions defined in the outer function will live longer than the duration of the outer function execution, if the inner function manages to survive beyond the life of the outer function as in the above case.
+- arguments array :- it holds all the arguments passed in the function call. These may be greater than the no. of parameters the function can accept.
+  eg function concat(seperator) {...}; concat(':', 'abc', 'def', 'xyz') // output is abc:def:xyz as arguments = [':', abc', 'def', 'xyz]
+- Default parameters (ES6 onwards) :- Earlier we needed to check if param is undefined and then assign it a value at function start.
+  eg function sum(a=0,b=0) {...}
+- Rest parameter :- last parameter of the function definition and used to specify an array of rest of the arguments after its preceeding parameter.
+  eg function convert(mult, ...param) { param.map(x => mult*x) }; convert(2,1,2,3); // output is 2.4.6
+- Arrow functions :-
+    shorter than earlier function def
+    does not contain their own 'this', 'this' inside them refers to the 'this' of the enclosing function.
+    does not contain 'arguments' and 'super'
+-' this' :- Every non arrow function defines its own this. It points to new object in constructor, undefined in strict mode function calls else enclosing object.
