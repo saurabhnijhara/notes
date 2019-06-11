@@ -1,0 +1,46 @@
+Arrays
+- let arr = [56,55]; let arr = new Array(arr_length); let arr = new Array(values);
+- Arrays are heterogeneous in nature in terms of values.
+- if you supply a non-integer value to the array operator, a property will be created in the array, instead of an array element.
+  eg let arr = []; arr[3.4] = 67; arr.hasOwnproperty(3.4) // true
+  This property is other properties of array like length
+- At the implementation level, JavaScript's arrays actually store their elements as standard object properties, using the array index as the property name. 
+  The length property is special; it always returns the index of the last element plus one.
+- You can change the value of the length property of an array. Supplying it a value less than no. of elements will truncate the array.
+- forEach() is an object method. So it can be used in array (array is also an object as described above) as any other array method is invoked.
+  eg arr.forEach(function(ele) {});
+- The elements of an array that are omitted when the array is defined are not listed when iterating by forEach, but are listed when undefined has been manually assigned to the element.
+  eg var array = ['first', 'second', , 'fourth'];
+  array.forEach(function(element) { console.log(element);}); // first second fourth
+  array = ['first', 'second', undefined, 'fourth'];
+  array.forEach(function(element) { console.log(element);}); // first second undefined fourth
+- Multi-dimentional arrays as arrays inside arrays.
+- Typed Arrays
+  Array-like objects and provide a mechanism for accessing raw binary data.
+  Useful in audio and video manipulation
+  Their implementation is split into Buffer and View. Buffer is just raw binary data which can only be accessed through a view. A View turns this data into an actual array.
+  A view can represent data as array of Int, UnsignedInt, BigInt,  Float etc.
+
+Map ( from ES6 onwards)
+- eg let mp = new Map(); mp.set('a','1'); mp.get('a); mp.delete('a'); mp.has('a');
+- It is very similar to maps in other languages
+- Different from a JS object that was earlier used as a map
+  Map holds size property, keys need not be strings, values held in order of insertion i.e ordered_map.
+  All keys and values have to be of the same type in Map.
+
+WeakMap
+- The WeakMap object is a collection of key/value pairs in which the keys are objects only and the values can be arbitrary values. 
+- The object references in the keys are held weakly, meaning that they are a target of garbage collection (GC) if there is no other reference to the object anymore.
+- The WeakMap API is the same as the Map API.
+- Not enumerable
+
+Set
+- Is ordered set and can hold any arbitirary value.
+- Different from Arrays in JS
+  No duplicates, can delete elements using value and not splice which is costly.
+
+WeakSet
+- WeakSets are collections of objects only and not of arbitrary values of any type.
+- References to objects in the collection are held weakly. If there is no other reference to an object stored in the WeakSet, they can be garbage collected. 
+- Not enumerable
+
