@@ -1,0 +1,63 @@
+References :-
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+https://developers.google.com/web/fundamentals/primers/async-functions
+
+Promises
+  - It is a returned object to which we attach callbacks. No need to pass callbacks into function signature.
+  eg func(data, successCallback, failureCallback); // function is an async function
+  This can be written as func(data).then(successCallback, failureCallback) OR var promise = func(data); promise.then(successCallback, failureCallback);
+  - Callbacks are attached to promises using .then() function
+  - Chaining
+    .then(...) returns a new promise to which we can again attach callbacks
+    eg fun1(...).then(,).then(,).... // Previous we had to achieve this passing the callback function as an argument and calling it at the end of the promise function
+    eg doSomething()
+      .then(result => doSomethingElse(result))
+      .then(newResult => doThirdThing(newResult))
+      .then(finalResult => {
+        console.log(`Got the final result: ${finalResult}`);
+      })
+      .catch(failureCallback); // .catch() is equivalent to .then(null, failureCallback)
+  - What we return in the promise function is passed as a parameter in the callback function.
+  - It's possible to chain after a failure, i.e. a catch, which is useful to accomplish new actions even after an action failed in the chain.
+    This can be used to achieve functionality as 'finally'.
+  - A promise chain stops if there's an exception, looking down the chain for catch handlers instead. This is very much modeled after how synchronous code works.
+  - async/await (ECMAScript 2017) :- Used to give a synchronous feel with async methods. It can replace promises in implementation.
+      They Allow you to write promise-based code as if it were synchronous, but without blocking the main thread
+      If you use the async keyword before a function definition, you can then use await within the function. When you await a promise, the function is paused in a non-blocking way until the promise settles. 
+      If the promise fulfills, you get the value back. If the promise rejects, the rejected value is thrown.
+      eg function logFetch(url) {
+          return fetch(url)
+          .then(response => response.text()
+          .then(text => { console.log(text);})
+          .catch(err => {console.error('fetch failed', err);}
+          );
+         }
+        async function logFetch(url) {
+          try {
+            const response = await fetch(url);
+            console.log(await response.text());
+          }
+         catch (err) {
+          console.log('fetch failed', err);
+         }
+        }
+  - When a promise is rejected, a global event is fired usually to the window.
+    This is either rejectionhandled (if rejected promise is handled by its callback) or unhandledrejection (if rejected promise has no rejection handler)
+  - Promise.resolve() and Promise.reject() are shortcuts to manually create an already resolved or rejected promise respectively.
+  - Promise.all() and Promise.race() are two composition tools for running asynchronous operations in parallel.
+    These can be more easily imitated using async/await and a loop.
+    Promise.all can also be implemented as :- Promise.resolve().then(func1).then(func2).then(func3); 
+  - functions passed to then() will never be called synchronously, even with an already-resolved promise.
+    eg Promise.resolve().then(() => console.log(2));
+       console.log(1); // 1, 2
+  - Simple promise chains are best kept flat without nesting, as nesting can be a result of careless composition.
+    Nesting is a control structure to limit the scope of catch statements. Specifically, a nested catch only catches failures in its scope and below, not errors higher up in the chain outside the nested scope.
+    eg doSomethingCritical()
+      .then(result => doSomethingOptional()
+        .then(optionalResult => doSomethingExtraNice(optionalResult))
+        .catch(e => {})) // Ignore if optional stuff fails; proceed.
+      .then(() => moreCriticalStuff())
+      .catch(e => console.log("Critical failure: " + e.message));
+    The inner neutralizing catch statement only catches failures from doSomethingOptional() and doSomethingExtraNice(), after which the code resumes with moreCriticalStuff(). Importantly, if doSomethingCritical() fails, its error is caught by the final (outer) catch only.
+  - 
+      
