@@ -1,1 +1,64 @@
+Tips and Tricks
 
+1) Consistency means every read should recive the most recent write or error.
+  Replication of Data and Consistency
+  a) Weak Consistency - After a write, a read may or may not see it. This approach is seen in systems such as memcached. 
+    eg VoIP, video chat, and realtime multiplayer games. 
+    For example, if you are on a phone call and lose reception for a few seconds, when you regain connection you do not hear what was spoken during connection loss.
+  b) Eventual Consistency - After a write, reads will eventually see it(after some lag of few ms).
+    eg DNS, Email
+    Here the data is replicated asynchronously. It works well in highly available systems.
+  c) Strong Consistency - After a write, reads will surely see it.
+    eg Systems that need transactions - Fiancial System, File Systems, RDBMS
+    Here data is replicated synchronously.
+
+2) High Availability ( Every request receives a response irrespective of whether its the most recent version of info or not)
+  - Fail over (active-passive using heartbeats, active-active)
+  - Redundancy ( Master-Slave, Master-Master)
+
+3) CAP
+   Partition Tolerance means the system constinues of operate even if there is partioning of the system due to a network failure.
+   As network failures are unavoidable, you will need to compromise on either C or A.
+   - CP :- Waiting for a response from the partitioned node might result in a timeout error. 
+     CP is a good choice if your business needs require atomic reads and writes (i.e transactions)
+   - AP :- Responses return the most recent version of the data, which might not be the latest. Writes might take some time to propagate when the partition is resolved
+     AP is a good choice if the business needs allow for eventual consistency or when the system needs to continue working despite external errors.
+
+4) DNS (Domain Name System)
+  - Hierarchical structure with Browser -> ISP DNS server -> Root DNS server
+  - NS record (name server) - Specifies the DNS servers for your domain/subdomain.
+    MX record (mail exchange) - Specifies the mail servers for accepting messages.
+    A record (address) - Points a name to an IP address.
+    CNAME (canonical) - Points a name to another name or CNAME (example.com to www.example.com) or to an Arecord.
+
+5) Content Delivery network
+  - Mostly static files like html, css, js, png, videos. Some CDNs such as Amazon CloudFront can also serve dynamic content.
+  - Adv :- Serving data from data center closer to user, less requests on server.
+  - How does the browser know to get the resources from the CDN instead of your server? The URL of your static resources are replaced (in code) to point to the CDN server instead of the URL of your own site.
+  - Configure a CDN :- Register for CDN account on CDN provider and specify pull zone. Create a new CDN URL name, like cdn.google.com. Add cdn url to static resource path in the code.
+  - Push CDN :- The server is responsible for pushing the resources on the CDN. 
+      Content is uploaded only when it is new or changed, minimizing traffic.
+      Sites with a small amount of traffic or sites with content that isn't often updated work well with push CDNs. Content is placed on the CDNs once, instead of being re-pulled at regular intervals.
+      Disav - Push data to multiple CDNs when data is changed. Maintain which data is to be uploaded on which cdn.
+  - Pull CDN :- Pull content from pull zone only when it is first requsted (lazy laoding).
+      TTL value determines if the content requested by user is stale or not in the CDN. If it is, then fetch from server and then cache it and return to user.
+      Results in slower requests if content is to be fetched from server.
+      Can create redundant traffic if files expire and are pulled before they have actually changed.
+      Sites with heavy traffic work well with pull CDNs, as traffic is spread out more evenly with only recently-requested content remaining on the CDN.
+
+6) Load Balancers
+  - Preventing requests from going to unhealthy servers
+  - SSL termination - Decrypt incoming requests and encrypt server responses so backend servers do not have to perform these potentially expensive operations
+      Removes the need to install X.509 certificates on each server
+  - Session persistence - Issue cookies and route a specific client's requests to same instance if the web apps do not keep track of sessions
+  - Routing Algorithms - Randon, ROund Robin, Layer 4, Layer 7, min response time, sessions/cookies etc.
+    layer 4 - Layer 4 load balancers look at info at the transport layer to decide how to distribute requests. Generally, this involves the source, destination IP addresses, and ports in the header, but not the contents of the packet. 
+    layer 7 - Layer 7 load balancers look at the application layer to decide how to distribute requests. This can involve contents of the header, message, and cookies.
+      For example, a layer 7 load balancer can direct video traffic to servers that host videos while directing more sensitive user billing traffic to security-hardened servers.
+  - Disav of Horizontal scaling
+    Downstream servers such as caches and databases need to handle more simultaneous connections as upstream servers scale out.
+
+7) Load balancer vs proxy
+  - proxy advantages same as load balancer - caching, compression, ssl termination, scalability, security.
+  - Deploying a load balancer is useful when you have multiple servers. Often, load balancers route traffic to a set of servers serving the same function as proxy.
+  - Reverse proxies can be useful even with just one web server or application server serving all benefits of a proxy/load balancer.
