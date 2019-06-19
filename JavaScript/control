@@ -1,0 +1,46 @@
+Reference
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling
+
+Control Flow
+- Block scope :- Before ES6, there was no block scope, but rather the scope of variables inside the block was the containing function or the script.
+  From ES6 onwards, variables defined as let and const inside block have blck scope.
+
+False values in JS
+- 0, null, undefined, "", false, NaN
+- All other values, including objects, evaluate to true in conditional statements.
+
+Try, catch, finally, throw
+- To create your own exception, you can use the Error class.
+  eg throw new Error("message foe the error");
+- You can have a return or a throw statement in a finally block and that always overwrites the return or throw statement in the try or catch block.
+  eg the below function returns false
+  function f() {
+  try {
+    throw 'bogus';
+  } catch(e) {
+    console.log('caught inner "bogus"');
+    throw e; // this throw statement is suspended until 
+             // finally block has completed
+  } finally {
+    return false; // overwrites the previous "throw"
+  }
+  // "return false" is executed now
+  }
+- You can throw numbers or strings or even expressions
+
+Promises to control flow in asyn calls
+
+for...in
+- iterates over all the keys of an object. For arrays it will return indices.
+  eg for (var i in obj) // here i is the key or index
+- not recommended for arrays as it will also iterates over any user defined keys inaddition to array indices.
+  eg var arr = [3, 5, 7]; arr.foo = 'hello';
+    for (var i in arr) {
+     console.log(i); // logs "0", "1", "2", "foo"
+    }
+
+for...of
+- iterates over all values of an object
+  eg for (var i of arr) {
+       console.log(i); // logs 3, 5, 7
+    }

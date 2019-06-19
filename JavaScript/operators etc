@@ -1,0 +1,51 @@
+References - 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
+
+- Destructuring
+  eg let arr = [1,2,3]; let [one,two,three] = arr; let [ one, , two] = arr
+- By default JS involves type conversion while comparing. Only exceptions are '===' and '!==' which follow strict type checking.
+- delete operator can be used to set an object or its property or element in array to undefined. It cannot be used on variables declared with var,let.
+  Deleting an array element only sets its value to undefined but not reduce array length.
+- typeof operator returns the type as a string
+- void operator is used to evaluate an expression without returning anything.
+- in operator returns true if the property name or array index is in the object.
+  eg let arr = [1,2]; 0 in arr // true; 2 in arr // false; length in  arr // true; 
+- instanceOf
+- spread opertor
+  eg var parts = ['shoulders', 'knees']; var lyrics = ['head', ...parts, 'and', 'toes'];
+  eg function f(x, y, z) { }
+     var args = [0, 1, 2]; f(...args);
+     
+Number Object :- It is built-in
+- Number.MIN_VALUE, MAX_VALUE, POSITIVE_INFINITY, NEGATIVE_INFINITY
+Math Object :- Built-in
+- Just like in other languages as cpp, java
+Date Object : Built-in
+- JS does not have date datatype but a Date built-in object which can be used to create new dates.
+- Stores as number of milisecs since 1 Jan 1970
+
+Strings
+- Starting with \x rerpresents hex, \u represents unicode.
+- String Objects :- Wrapper around primitive string literals. 
+  You can call any of the methods of the String object on a string literal value—JavaScript automatically converts the string literal to a temporary String object, calls the method, then discards the temporary String object. 
+  You can also use the String.length property with a string literal.
+- Template Literals :- Template literals are string literals allowing embedded expressions. 
+  You can use multi-line strings and string interpolation features with them. 
+  Enclosed within back ticks
+  eg let a=5, b=2, c=`sum is ${a+b}`;
+
+RegEx
+- Regex as literals (hardcoded static regex, compilation when script is loaded) eg let reg = '/abc/;
+- RegEx as objects using constructor (when the regex can change over time or is being receivd at run time from user input, run time compliation) eg let reg = new RegExp('/abc/');
+- starts and ends with a forward slash ('/')
+- '*' indicates zero or more instances of previous char, '+' indicates one or more instances of prev char, '[]' means choose any one, '|' means OR.
+- To use special chars, like *, /, \, etc, you need to escape them using a backslash ('\')
+  eg /a\*b\// -> "a*b/"
+- Including parentheses in a regular expression pattern causes the corresponding submatch to be remembered. For example, /a(b)c/ matches the characters 'abc' and remembers 'b'. 
+  eg var re = /(\w+)\s(\w+)/; var str = 'John Smith'; var newstr = str.replace(re, '$2, $1'); console.log(newstr); // Smith, John
+  To use these remembered matches inside the same reges, you can refer to them as '\1', '\2' and so on. Note - Indexing here starts from 1 and not 0.
+  eg var re = /(?:\d{3}|\(\d{3}\))([-\/\.])\d{3}\1\d{4}/; // validating a phone number
+  '?:' in the start of a paranthesized expression implies to not remember that match in memory
+- 6 Flags ( g for global search, i for case insensitive search, m for multi line search etc).
+  Syntax :- var re = /pattern/flags; var re = new RegExp(pattern, flags)
+
