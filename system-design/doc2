@@ -1,0 +1,28 @@
+1) Zookeeper :- can help services find each other by keeping track of registered names, addresses, ports, etc.
+
+2) DB Scaling Technique - Federation :- Federation (or functional partitioning) splits up databases by function. 
+  For example, instead of a single, monolithic database, you could have three databases: forums, users, and products.
+  Adv :- Index size reduces, Each can have its own cache, less traffic to each db as compared to onw whole, write requests can be in parallel and no need to serialize.
+  Disadv :- Joining tables across db using a server link.
+
+3) DB Scaling Technique - Denormalization :- Redundant copies of the data are written in multiple tables to avoid expensive joins.
+  attemps to improve read performance at the expense of some write performance
+  
+4) SQL Tuning
+  Columns that you are querying (SELECT, GROUP BY, ORDER BY, JOIN) could be faster with indices.
+  Indices are usually represented as self-balancing B-tree that keeps data sorted and allows searches, sequential access, insertions, and deletions in logarithmic time.
+  When loading large amounts of data, it might be faster to disable indices, load the data, then rebuild the indices.
+  Denormalize where performance demands it and avoid joins.
+  Break up a table by putting hot spots in a separate table to help keep it in memory.
+
+5) NoSQL
+  Data is denormalized, and joins are generally done in the application code. 
+  Most NoSQL stores lack true ACID transactions and favor eventual consistency.
+  Document Store :- key-value store with documents (xml, json, binary) stored as values.
+    Document stores provide APIs or a query language to query based on the internal structure of the document itself.
+  WideColumn :-  nested map ColumnFamily<RowKey, Columns<ColKey, Value, Timestamp>>
+    A wide column store's basic unit of data is a column (name/value pair). A column can be grouped in column families (analogous to a SQL table). Super column families further group column families. You can access each column independently with a row key, and columns with the same row key form a row. Each value contains a timestamp for versioning and for conflict resolution.
+    Google introduced Bigtable as the first wide column store, which influenced the open-source HBase often-used in the Hadoop ecosystem, and Cassandra from Facebook. 
+    They are often used for very large data sets.
+  Graph :- each node is a record and each arc is a relationship between two nodes.  
+  
