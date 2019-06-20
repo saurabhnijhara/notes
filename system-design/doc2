@@ -26,3 +26,16 @@
     They are often used for very large data sets.
   Graph :- each node is a record and each arc is a relationship between two nodes.  
   
+6) Cache
+  Your database usually includes some level of caching in a default configuration, optimized for a generic use case. Tweaking these settings for specific usage patterns can further boost performance.
+  In cache, you can store objects by serializing them.
+  Cache invalidation - write through, write back, write ahead, TTL for cache objects (can be used in conjunction with others).
+  Write through - The application uses cache as the main source of data and not db. App req to add/update entry in cache -> cache synchronously updates db -> cache updates itself -> cache returns. Slow in case of cache miss.
+  Write back - App uses cache for data and db is updated asynchronously. App req to add/update entry in cache -> cache sends update message to queue from where it is consumed asyc by the event processor -> cache updates itself -> cache returns. Cache misses are faster due to async.
+  Disadv - More complex to implement, what if data lost before writing to db.
+  
+7) UDP 
+  This is useful with DHCP because the client has not yet received an IP address, thus preventing a way for TCP to stream without the IP address.
+  Use when - You need the lowest latency, Late data is worse than loss of data.
+
+8) 
