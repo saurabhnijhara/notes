@@ -83,8 +83,8 @@ console.log(x);  // x is 5 as x has global scope
 **Object Literals (from ES6)**
 - Property names that are not valid identifiers also cannot be accessed as a dot (.) property, but can be accessed and set with the array-like notation("[]").
   eg var obj = {
-    // __proto__
-    __proto__: theProtoObj,
+    // \__proto\__
+    \__proto\__: theProtoObj,
     // Shorthand for ‘handler: handler’
     handler,
     // Methods
