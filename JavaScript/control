@@ -1,11 +1,11 @@
-Reference
+## Reference
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling
 
-Control Flow
+## Control Flow
 - Block scope :- Before ES6, there was no block scope, but rather the scope of variables inside the block was the containing function or the script.
   From ES6 onwards, variables defined as let and const inside block have blck scope.
 
-False values in JS
+## False values in JS
 - 0, null, undefined, "", false, NaN
 - All other values, including objects, evaluate to true in conditional statements.
 
